@@ -110,3 +110,17 @@ try {
 } catch(error) {
     console.log("Attenzione, si è verificato un errore: " + error);
 };
+
+
+// Errori come oggetti per distinguerli da altri tipi di risultati speciali
+// non dovuti magari dall'errore in se.
+
+function lastElement(array) {
+    if (array.length == 0) {
+      return {failed: true};
+    } else {
+      return {element: array[array.length - 1]};
+    }
+}
+
+console.log(lastElement([1,2,3,6]))
