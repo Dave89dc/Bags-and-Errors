@@ -110,3 +110,80 @@ try {
 } catch(error) {
     console.log("Attenzione, si è verificato un errore: " + error);
 };
+
+// Esempi in classe con Andrea:
+
+function parseIntWithError(selectedString) {
+    const result = parseInt(selectedString);
+    if(isNaN(result)) {
+        throw new Error("Sei un cretino, non hai messo un numero!");
+    };
+    return result;
+};
+
+console.log(parseIntWithError("223"));
+// console.log(parseIntWithError("W la figa"));
+
+// "throw", comunque, rompe il programma e non è la soluzione migliore
+// per cui un utente ci si trovi poi ad affrontare.
+// Quindi gli errori lanciati vanno gestiti, e per questo si usa la funzione
+// Try and Catch:
+
+try {
+    const numero = (parseIntWithError("W la figa"));
+    console.log(numero);
+} catch (error) {
+    console.log(error.message); // --> oppure console.log("Caro utente, forse è colpa mia,
+};  // ma qualcosa è andato storto. Potresti reinserire il numero ? Scusa e grazie ancora."); 
+
+
+// IndexOf with Error:
+
+function indexOfWithError(array, element) {
+    if(array.length === 0) {
+        throw new EmptyArrayError("Che cazzo combini, mi hai passato un array vuoto!");
+    } else {
+        const index = array.indexOf(element);
+        if(index === -1) {
+            throw new ElementNotFoundError("Non ho trovato un belino di niente!");
+        } else {
+            return index;
+        };
+    };
+};
+
+// try {
+//     const index = indexOfWithError(["focaccia", "pizza", "hamburger"], "pizza");
+//     console.log(index);
+// } catch(error) {
+//     if(error instanceof EmptyArrayError) {
+//         console.log("Caro Utente, per qualche strano errore mi è arrivato un array vuoto.");
+//     } else if(error instanceof ElementNotFoundError) {
+//         console.log("Ho cercato in tutto l'array, ma purtroppo non ho trovato niente.");
+//     } else {
+//         console.log("Qualcosa non ha funzionato, ma non so altro.");
+//     };
+// };
+
+
+function isElementInArray(array, element) {
+    try {
+        indexOfWithError(array, element);
+        return true;
+    } catch(error) {
+        if(error instanceof ElementNotFoundError) {
+            return false;
+        } else {
+            throw error;  
+        };
+    } finally {  // finally si usa pochissimo e esegue il comando assegnato anche se si rompe
+        console.log("Qualcosa è andato storto!"); // il programma.
+    }
+};
+
+try {
+    const isInside = isElementInArray(["qui", "quo", "qua"], "qui");
+    console.log(isInside);
+} catch(error) {
+    console.log(error.message);
+};
