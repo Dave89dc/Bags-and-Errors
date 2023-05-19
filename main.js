@@ -124,6 +124,8 @@ function lastElement(array) {
 }
 
 console.log(lastElement([1,2,3,6]))
+
+
 // Esempi in classe con Andrea:
 
 function parseIntWithError(selectedString) {
